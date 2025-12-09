@@ -1,12 +1,3 @@
-# answer_builder.py
-"""
-Answer Builder for RAG system (Google Colab compatible)
-- Correct OpenAI SDK usage
-- No leading indentation in prompt
-- Sort retrieved passages by score
-- Clean, strict instructions for grounded answering
-"""
-
 import os
 import sys
 from typing import List, Dict
@@ -23,9 +14,9 @@ import httpx # Explicitly import httpx for client initialization
 LLM_MODEL = "gpt-4o-mini"
 
 
-# ---------------------------------------------------------
+
 # Prompt Constructor
-# ---------------------------------------------------------
+
 def build_prompt(question: str, passages: List[Dict]) -> str:
     """
     Build clean RAG prompt without indentation issues.
@@ -39,7 +30,7 @@ def build_prompt(question: str, passages: List[Dict]) -> str:
 
     context_block = "\n".join(context_lines)
 
-    # NO LEADING TABS OR SPACES → Critical for LLM correctness
+    # Relevant prompt for accurate results
     prompt = (
         "You are an expert assistant. Use ONLY the provided context passages to answer.\n\n"
         f"QUESTION:\n{question}\n\n"
@@ -54,9 +45,9 @@ def build_prompt(question: str, passages: List[Dict]) -> str:
     return prompt
 
 
-# ---------------------------------------------------------
+
 # Main RAG Answer Pipeline
-# ---------------------------------------------------------
+
 def answer_question(question: str, top_k: int = 6, model_name: str = LLM_MODEL):
     """
     Retrieves relevant passages → Builds prompt → Queries LLM → Returns grounded answer.
@@ -72,8 +63,8 @@ def answer_question(question: str, top_k: int = 6, model_name: str = LLM_MODEL):
 
     prompt = build_prompt(question, passages)
 
-    # Create OpenAI client (correct method to avoid proxy issues)
-    client = OpenAI(http_client=httpx.Client()) # Pass an explicit httpx.Client()
+    # Create OpenAI client
+    client = OpenAI(http_client=httpx.Client()) 
 
     response = client.chat.completions.create(
         model=model_name,
@@ -82,7 +73,7 @@ def answer_question(question: str, top_k: int = 6, model_name: str = LLM_MODEL):
         max_tokens=500,
     )
 
-    # Correct way to access the message content attribute
+    # Access the message content attribute
     answer = response.choices[0].message.content
 
     return {
@@ -91,9 +82,9 @@ def answer_question(question: str, top_k: int = 6, model_name: str = LLM_MODEL):
     }
 
 
-# ---------------------------------------------------------
+
 # Test Run
-# ---------------------------------------------------------
+
 if __name__ == "__main__":
     q = "How have hybrid engines changed Formula 1 strategy?"
     result = answer_question(q)

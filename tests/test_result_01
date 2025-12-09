@@ -49,4 +49,4 @@ Colab paid products - Cancel contracts here
 
 Remarks —
 
-FAISS initially returned 6 results, of which only the first two were correct while the remaining four were irrelevant. I need to refine this setup to filter out ambiguous matches and ensure that only high-quality, relevant information is passed to the LLM so it can generate accurate responses.
+FAISS initially returned 5 results, of which only the first two were correct while the remaining three were irrelevant. I need to refine this setup to filter out ambiguous matches and ensure that only high-quality, relevant information is passed to the LLM so it can generate accurate responses.

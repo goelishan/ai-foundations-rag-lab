@@ -1,0 +1,52 @@
+2025-12-09 10:13:57.354155: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1765275238.240851   21371 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1765275238.462075   21371 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1765275239.846945   21371 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1765275239.847037   21371 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1765275239.847043   21371 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1765275239.847048   21371 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+2025-12-09 10:13:59.996704: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Loading index file from - /content/ai-foundations-rag-lab/outputs/faiss_index.index
+Loading metadata file from - /content/ai-foundations-rag-lab/outputs/metadata.json
+Index and Metadata has been loaded successfully.
+Loading Sentence Transformer: all-MiniLM-L6-v2
+modules.json: 100% 349/349 [00:00<00:00, 1.60MB/s]
+config_sentence_transformers.json: 100% 116/116 [00:00<00:00, 490kB/s]
+README.md: 10.5kB [00:00, 20.2MB/s]
+sentence_bert_config.json: 100% 53.0/53.0 [00:00<00:00, 294kB/s]
+config.json: 100% 612/612 [00:00<00:00, 3.13MB/s]
+model.safetensors: 100% 90.9M/90.9M [02:06<00:00, 721kB/s]
+tokenizer_config.json: 100% 350/350 [00:00<00:00, 1.48MB/s]
+vocab.txt: 232kB [00:00, 16.7MB/s]
+tokenizer.json: 466kB [00:00, 35.6MB/s]
+special_tokens_map.json: 100% 112/112 [00:00<00:00, 576kB/s]
+config.json: 100% 190/190 [00:00<00:00, 1.05MB/s]
+Query Score 1: 0.4367
+Doc: note_02_f1_the_red_bull-mercedes_rivalry_2018-2024.md
+Passage Id: note_02_f1_the_red_bull-mercedes_rivalry_2018-2024.md_p0
+Text: # F1: The Red Bull-Mercedes Rivalry (2018-2024) ## F1: The Red Bull-Mercedes Rivalry (2018-2024) **Summary:** A narrative on technical development races, aerodynamic philosophies, and championship- defining moments. This note was written for a synthetic knowledge base designed to support RAG experim
+Query Score 2: 0.4120
+Doc: note_01_f1_the_rise_of_hybrid_power_units.md
+Passage Id: note_01_f1_the_rise_of_hybrid_power_units.md_p0
+Text: # F1: The Rise of Hybrid Power Units ## F1: The Rise of Hybrid Power Units **Summary:** An exploration of how hybrid power units reshaped strategy, engineering trade-offs, and the sustainability narrative in Formula 1. This note was written for a synthetic knowledge base designed to support RAG expe
+Query Score 3: 0.2954
+Doc: note_05_football_tactical_evolution_from_4-4-2_to_gegenpress.md
+Passage Id: note_05_football_tactical_evolution_from_4-4-2_to_gegenpress.md_p0
+Text: # Football: Tactical Evolution — From 4-4-2 to Gegenpress ## Football: Tactical Evolution — From 4-4-2 to Gegenpress **Summary:** The tactical shifts in world football over the last three decades and their statistical impact. This note was written for a synthetic knowledge base designed to support R
+Query Score 4: 0.2891
+Doc: note_14_energy_the_ev_supply_chain_bottlenecks.md
+Passage Id: note_14_energy_the_ev_supply_chain_bottlenecks.md_p0
+Text: # Energy: The EV Supply Chain Bottlenecks ## Energy: The EV Supply Chain Bottlenecks **Summary:** Battery raw materials, refining, logistics, and geopolitical risk in electric vehicle rollouts. This note was written for a synthetic knowledge base designed to support RAG experiments. It mixes factual
+Query Score 5: 0.2563
+Doc: note_06_football_womens_football_investment_and_growth.md
+Passage Id: note_06_football_womens_football_investment_and_growth.md_p0
+Text: # Football: Women's Football — Investment and Growth ## Football: Women's Football — Investment and Growth **Summary:** The rapid professionalization of women's football, leagues, viewership, and pay equity debates. This note was written for a synthetic knowledge base designed to support RAG experim
+Colab paid products - Cancel contracts here
+
+
+
+Remarks —
+
+FAISS initially returned 6 results, of which only the first two were correct while the remaining four were irrelevant. I need to refine this setup to filter out ambiguous matches and ensure that only high-quality, relevant information is passed to the LLM so it can generate accurate responses.

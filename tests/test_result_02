@@ -1,0 +1,37 @@
+# Test Result 02: Debugging the RAG Answer Builder
+
+## Overview
+This document details the debugging process for the `answer_builder.py` script, which initially failed to execute correctly in the Colab environment. Multiple errors were encountered and resolved to achieve a functional RAG pipeline.
+
+## Errors Encountered and Resolutions
+
+### 1. `TypeError: 'ChatCompletionMessage' object is not subscriptable`
+
+**Cause:**
+This error occurred because the OpenAI API response object's `message` attribute was treated as a dictionary (e.g., `response.choices[0].message["content"]`). In recent versions of the OpenAI Python SDK, `message` is an object, and its content should be accessed via dot notation.
+
+**Resolution:**
+The code was corrected to access the content attribute directly: `answer = response.choices[0].message.content`.
+
+### 2. `ModuleNotFoundError: No module named 'retriever'` followed by `ModuleNotFoundError: No module named 'src'`
+
+**Cause:**
+When running the `answer_builder.py` script directly, Python's import mechanism couldn't locate `retriever.py` within the `src` directory. This typically happens for two reasons:
+*   **Incorrect import path:** The original import was `from retriever import retrieve`, which assumes `retriever.py` is in the same directory or a directly accessible module.
+*   **Missing `__init__.py`:** For Python to treat a directory (`src` in this case) as a package, it must contain an `__init__.py` file. If this file is missing, `from src.retriever import retrieve` will fail.
+
+**Resolution:**
+1.  **Corrected import path:** The import statement in `answer_builder.py` was changed to `from src.retriever import retrieve`.
+2.  **Added `__init__.py`:** An empty file named `__init__.py` was created inside the `/content/ai-foundations-rag-lab/src/` directory to explicitly mark `src` as a Python package.
+3.  **Added `sys.path` modification:** A code snippet was added to `answer_builder.py` to ensure the project root (`/content/ai-foundations-rag-lab`) was added to `sys.path`. This makes it robust to different execution contexts.
+
+### 3. `TypeError: Client.__init__() got an unexpected keyword argument 'proxies'`
+
+**Cause:**
+This error arose from the OpenAI client initialization: `client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))`. While `api_key` is a valid argument, the underlying `httpx` library (used by OpenAI SDK) might pick up proxy settings from environment variables. If these environment variables are malformed or incompatible with `httpx`'s internal proxy handling, passing an explicit `api_key` can inadvertently trigger this `TypeError` related to `proxies`.
+
+**Resolution:**
+The `OpenAI` client initialization was modified to explicitly pass an `httpx.Client()` instance, effectively bypassing any problematic default proxy detection: `client = OpenAI(http_client=httpx.Client())`. This ensured a clean client setup.
+
+## Final Outcome
+After implementing all the above fixes, the `answer_builder.py` script now executes successfully. For the test query "How have hybrid engines changed Formula 1 strategy?", the system returns "I don't know from the provided documents." This response is expected and correct, as the retrieved passages (which were primarily document summaries) did not contain enough detailed information to answer the question, adhering to the strict instruction of the RAG prompt.

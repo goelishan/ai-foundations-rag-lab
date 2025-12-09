@@ -22,7 +22,7 @@ def load_markdown_files(data_dir):
 
     return docs
 
-def split_into_passages(text,max_words=150,overlap=30):
+def split_into_passages(text,max_words=600,overlap=30):
     # simple word based sliding window splitter
 
     words=re.split(r"\s+",text.strip())
@@ -41,7 +41,7 @@ def split_into_passages(text,max_words=150,overlap=30):
             start=end-overlap
     return passages
 
-def build_corpus(data_dir="/content/rag-project/data"):
+def build_corpus(data_dir="/content/ai-foundations-rag-lab/data"):
     docs=load_markdown_files(data_dir)
     items=[]
 

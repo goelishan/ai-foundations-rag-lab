@@ -19,8 +19,8 @@ Convert passages into dense vectors for FAISS (Google Colab Compatible)
 MODEL_NAME = "all-MiniLM-L6-v2"
 
 # Absolute paths for Colab
-DATA_DIR = "/content/rag-project/data"
-OUTPUT_DIR = "/content/rag-project/outputs"
+DATA_DIR = "/content/ai-foundations-rag-lab/data"
+OUTPUT_DIR = "/content/ai-foundations-rag-lab/outputs"
 INDEX_PATH = f"{OUTPUT_DIR}/faiss_index.index"
 META_PATH = f"{OUTPUT_DIR}/metadata.json"
 

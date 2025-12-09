@@ -1,30 +1,26 @@
 import json
 import time
+from typing import List,Dict
+from src.answer_builder import answer_question
 import os
 import sys
-from typing import List,Dict
-
-print("--- rag_eval.py script started ---") # Added for debugging
-
-# Add the project root to sys.path
-script_dir = os.path.dirname(__file__)
-project_root = os.path.abspath(os.path.join(script_dir, '..'))
-if project_root not in sys.path:
-    sys.path.insert(0, project_root)
-
-from src.answer_builder import answer_question
 
 TEST_QUESTIONS_FILE = "/content/ai-foundations-rag-lab/tests/questions/test_questions.txt"
 RESULTS_FILE = "/content/ai-foundations-rag-lab/tests/results/test_results.json"
 
+# Ensure root path is in sys.path for module imports
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
+
 def load_test_questions(path:str)-> List[str]:
-  print("--- Loading test questions ---") # Added for debugging
   with open(path,"r",encoding="utf-8") as f:
     questions=[line.strip() for line in f.readlines() if line.strip()]
   return questions
 
 def evaluate_rag_system(questions:str,top_k:int=5):
-  print("--- Starting RAG system evaluation ---") # Added for debugging
+
   results=[]
 
   for q in questions:
@@ -62,7 +58,6 @@ def evaluate_rag_system(questions:str,top_k:int=5):
   return results
 
 def save_results(results:List[Dict],path:str=RESULTS_FILE):
-  print("--- Saving results ---") # Added for debugging
   with open(path,"w",encoding="utf-8")as f:
     json.dump(results,f,ensure_ascii=True,indent=2)
   
@@ -70,22 +65,21 @@ def save_results(results:List[Dict],path:str=RESULTS_FILE):
 
 
 def result_summary(results:List[Dict]):
-  print("--- Generating result summary ---") # Added for debugging
+
   total=len(results)
-  failure_list=[r for r in results if r["failed"]]
-  success=total-len(failure_list)
+  failure=[r for r in results if r["failed"]]
+  success=total-len(failure)
 
   print("\n-----------RAG Evaluation Summary----------\n")
   print(f"Total Questions - {total}")
   print(f"Successful Answers - {success}")
-  print(f"Failed Answers - {len(failure_list)}")
+  print(f"Failed Answers - {len(failure)}")
   print(f"\nFailures Breakdown-\n")
-  for f in failure_list:
-    print(f"Q: {f["question"]}\nA: {f["failure_reason"]}") # Fixed: use 'f' instead of 'failure'
+  for f in failure:
+    print(f"Q: {failure["question"]}\nA: {failure["failure_reason"]}")
   print("--------------------------------------------------------")
 
-if __name__=="__main__":
-    print("--- Entering main execution block ---") # Added for debugging
+  if __name__=="__main__":
     questions=load_test_questions(TEST_QUESTIONS_FILE)
     print(f"Loaded {len(questions)} questions.")
     results=evaluate_rag_system(questions=questions,top_k=5)
